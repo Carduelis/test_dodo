@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Money Changer</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.radio/2.0.0/backbone.radio.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/backbone.marionette/3.0.0/backbone.marionette.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<header class="page-header container">
+		<h1>Dodo Analitic system</h1>
+		<!-- <p class="lead">Resolves an inconvenience in case of group ordering food -->
+	</header>
+	<section id="dodo-app" class="container">
+		
+	</section>
+	<footer class="container">
+		<p class="small text-muted">Created by Pavel Shchegolev, 2016
+	</footer>
+	<script id="t-table-header" type="text/template">
+		<section class="average">
+			<h4>В среднем за 12 недель</h4>
+			<ul class="col-group">
+				<li class="col-rank">Место</li>
+				<li class="col-pizzeria">Пиццерия</li>
+				<li class="col-rating">Рейтинг</li>
+			</ul>
+		</section>
+		<section class="last-week">
+			<h4>На прошлой неделе, 11&thinsp;&ndash;&thinsp;17&nbsp;июля</h4>
+			<ul class="col-group">
+				<li class="col-quality">Качество</li>
+				<li class="col-service">сервис</li>
+				<li class="col-cleanliness">чистота</li>
+				<li class="col-chart">12 нед.</li>
+				<li class="col-rating-2">Рейтинг</li>
+				<li class="col-problems">Проблемы</li>
+			</ul>
+		</section>
+	</script>
+	<script id="t-table-line" type="text/template">
+		<section class="average">
+			<ul class="col-group">
+				<li class="col-rank">
+					<% if (rank == 1) { %><span class="bullet medal medal-gold" title="Золото"></span><% } %>
+					<% if (rank == 2) { %><span class="bullet medal medal-silver" title="Серебро"></span><% } %>
+					<% if (rank == 3) { %><span class="bullet medal medal-bronze" title="Бронза"></span><% } %>
+					<span class="rank"><%-rank%></span>
+				</li>
+				<li class="col-pizzeria">
+					<% if (url) { %>
+						<a href="<%-url%>" target="_blank"><span><%-pizzeriaName%></span></a>
+					<% } else { %>
+						<span><%-pizzeriaName%></span>
+					<% } %>
+				</li>
+				<li class="col-rating">
+					<span class="mad-rating <% if (ratingIntegerPart < 80) { %>text-danger<% } %>">
+						<span class="integer"><%-ratingIntegerPart%></span>
+						<span class="separator">,</span>
+						<span class="integer"><%-ratingDecimalPart%></span>
+					</span>
+				</li>
+			</ul>
+		</section>
+		<section class="last-week">
+			<ul class="col-group">
+				<li class="col-quality"><%-quality%></li>
+				<li class="col-service"><%-service%></li>
+				<li class="col-cleanliness"><%-cleanliness%></li>
+				<li class="col-chart">
+					<ul class="chart-group">
+						<% for (var pill in pills) { %>
+							<% p = pills[pill] %>
+							<li class="chart-pill<% if (p.rating < 80) %> chart-pill-danger<% } %>" style="height: <%-p.rating%>%;"></li>
+						<% } %>
+					</ul>
+				</li>
+				<li class="col-rating-2">
+					<span class="rating <% if (rating < 80) { %>text-danger<% } %>">
+						<span class="integer"><%-rating%></span>
+					</span>
+					<span class="rating-delta">
+						<% if (delta < 0) { %>
+							<span class="text-danger">
+								<span class="caret caret-down"></span>
+								<span class="value"><%-Math.abs(delta)%></span>
+							</span>
+						<% } else { %>
+						<span class="text-success">
+							<span class="caret caret-up"></span>
+							<span class="value"><%-delta%></span>
+						</span>
+						<% } %>
+					</span>
+				</li>
+				<li class="col-problems">
+					<%-problems%>
+				</li>
+			</ul>
+		</section>
+	</script>
+</body>
+</html>
